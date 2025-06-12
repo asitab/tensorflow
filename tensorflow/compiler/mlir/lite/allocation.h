@@ -64,24 +64,26 @@ class Allocation {
 class MMAPAllocation : public Allocation {
  public:
   /// Loads and maps the provided file to a memory region.
-  MMAPAllocation(const char* filename, ErrorReporter* error_reporter);
+  MMAPAllocation(const char* filename, ErrorReporter* error_reporter,
+                 bool map_private = false);
 
   /// Loads and maps the provided file to a memory region at the given
   // offset and length (both in bytes).
   MMAPAllocation(const char* filename, size_t offset, size_t length,
-                 ErrorReporter* error_reporter);
+                 ErrorReporter* error_reporter, bool map_private = false);
 
   /// Maps the provided file descriptor to a memory region.
   /// Note: The provided file descriptor will be dup'ed for usage; the caller
   /// retains ownership of the provided descriptor and should close accordingly.
-  MMAPAllocation(int fd, ErrorReporter* error_reporter);
+  MMAPAllocation(int fd, ErrorReporter* error_reporter,
+                 bool map_private = false);
 
   /// Maps the provided file descriptor, with the given offset and length (both
   /// in bytes), to a memory region.
   /// Note: The provided file descriptor will be dup'ed for usage; the caller
   /// retains ownership of the provided descriptor and should close accordingly.
   MMAPAllocation(int fd, size_t offset, size_t length,
-                 ErrorReporter* error_reporter);
+                 ErrorReporter* error_reporter, bool map_private = false);
 
   ~MMAPAllocation() override;
   const void* base() const override;
@@ -115,12 +117,12 @@ class MMAPAllocation : public Allocation {
 
  private:
   // Assumes ownership of the provided `owned_fd` instance.
-  MMAPAllocation(ErrorReporter* error_reporter, int owned_fd);
+  MMAPAllocation(ErrorReporter* error_reporter, int owned_fd, bool map_private);
 
   // Assumes ownership of the provided `owned_fd` instance, and uses the given
   // offset and length (both in bytes) for memory mapping.
   MMAPAllocation(ErrorReporter* error_reporter, int owned_fd, size_t offset,
-                 size_t length);
+                 size_t length, bool map_private);
 };
 
 class FileCopyAllocation : public Allocation {
