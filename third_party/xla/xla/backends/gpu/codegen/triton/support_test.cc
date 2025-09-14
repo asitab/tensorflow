@@ -78,7 +78,6 @@ bool DoesOpSupportType(HloOpcode opcode, PrimitiveType type) {
       return type == PRED || pu::IsIntegralType(type);
     case HloOpcode::kAtan2:
     case HloOpcode::kCos:
-    case HloOpcode::kExp:
     case HloOpcode::kExpm1:
     case HloOpcode::kLog:
     case HloOpcode::kLog1p:
@@ -96,6 +95,7 @@ bool DoesOpSupportType(HloOpcode opcode, PrimitiveType type) {
     case HloOpcode::kAcos:
     case HloOpcode::kAcosh:
     case HloOpcode::kCbrt:
+    case HloOpcode::kCosh:
     case HloOpcode::kErf:
     case HloOpcode::kFloor:
     case HloOpcode::kCeil:
@@ -452,6 +452,7 @@ constexpr std::array kTestedOpsUnaryElementwise = {
     HloOpcode::kClz,
     HloOpcode::kCopy,
     HloOpcode::kCos,
+    HloOpcode::kCosh,
     HloOpcode::kErf,
     HloOpcode::kExp,
     HloOpcode::kExpm1,

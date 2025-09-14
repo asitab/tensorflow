@@ -2853,6 +2853,7 @@ bool LayoutAssignment::InstructionCanChangeLayout(
     case HloOpcode::kConcatenate:
     case HloOpcode::kConvert:
     case HloOpcode::kCos:
+    case HloOpcode::kCosh:
     case HloOpcode::kAllGather:
     case HloOpcode::kAllGatherStart:
     case HloOpcode::kAllGatherDone:
