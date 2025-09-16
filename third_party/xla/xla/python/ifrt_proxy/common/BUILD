@@ -24,7 +24,10 @@ package(
 
 # Export headers referenced by the google-internal-version of grpc_credentials.
 exports_files(
-    ["grpc_credentials.h"],
+    [
+        "env_utils.h",
+        "grpc_credentials.h",
+    ],
     visibility = if_google(
         ["//xla/python/ifrt_proxy/common/google:__pkg__"],
         ["//visibility:private"],
@@ -71,6 +74,24 @@ cc_library(
         "@com_google_absl//absl/log",
         "@local_tsl//tsl/platform",
     ],
+)
+
+cc_library(
+    name = "env_utils",
+    hdrs = ["env_utils.h"],
+    deps = if_google(
+        ["//xla/python/ifrt_proxy/common/google:env_utils_google_lib"],
+        [":env_utils_oss_lib"],
+    ) + ["@com_google_absl//absl/strings:string_view"],
+)
+
+cc_library(
+    name = "env_utils_oss_lib",
+    srcs = [
+        "env_utils.cc",
+        "env_utils.h",
+    ],
+    deps = ["@com_google_absl//absl/strings:string_view"],
 )
 
 tf_proto_library(
